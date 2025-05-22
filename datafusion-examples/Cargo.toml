@@ -52,6 +52,11 @@ path = "examples/external_dependency/dataframe-to-s3.rs"
 name = "query_aws_s3"
 path = "examples/external_dependency/query-aws-s3.rs"
 
+[[bench]]
+name = "iaa_offload"
+path = "examples/iaa_offload.rs"
+harness = false
+
 [dev-dependencies]
 arrow = { workspace = true }
 # arrow_schema is required for record_batch! macro :sad:
@@ -78,6 +83,17 @@ tracing = { version = "0.1" }
 tracing-subscriber = { version = "0.3" }
 url = { workspace = true }
 uuid = "1.16"
+
+criterion = { workspace = true, features = ["async_tokio", "async_futures"] }
+
+# Using tracy to profile
+[dependencies.tracy]
+package = "tracy_full"
+version = "1.10.0"
+features = ["enable", "tracing"]
+
+[build-dependencies]
+#bindgen = "0.71.0"
 
 [target.'cfg(not(target_os = "windows"))'.dev-dependencies]
 nix = { version = "0.30.1", features = ["fs"] }
